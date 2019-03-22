@@ -6,6 +6,7 @@
 #define SKELETON_LEDBLINKINGTASK_H
 
 #include <thread.hpp>
+#include "../hw/Led.h"
 
 namespace tasks {
 
@@ -17,7 +18,8 @@ namespace tasks {
     ~LedBlinkingTask() = default;
 
   private:
-    void Run();
+    void Run() override;
+    hw::Led m_led;
   };
 
 }

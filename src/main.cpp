@@ -44,10 +44,6 @@ int main() {
 
   hw::system::irq_disable();
 
-//  rcc_periph_clock_enable(RCC_GPIOD);
-
-  gpio_mode_setup(GPIOD, GPIO_MODE_OUTPUT, GPIO_PUPD_NONE, GPIO12);
-
   auto led_blinking_task = new tasks::LedBlinkingTask();
 
   rtos::Thread::StartScheduler();
@@ -59,10 +55,13 @@ void vApplicationMallocFailedHook()
 {
   rtos::CriticalSection::Enter();
   {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wmissing-noreturn"
     while(true)
     {
       portNOP();
     }
+#pragma clang diagnostic pop
   }
   rtos::CriticalSection::Exit();
 }
@@ -71,10 +70,13 @@ void vAssertCalled(const char* pcFile, unsigned long ulLine)
 {
   rtos::CriticalSection::Enter();
   {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wmissing-noreturn"
     while(true)
     {
       portNOP();
     }
+#pragma clang diagnostic pop
   }
   rtos::CriticalSection::Exit();
 }

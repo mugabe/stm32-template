@@ -57,6 +57,7 @@ file(
         "libs/freertos/portable/MemMang/heap_4.c"
         #"libs/freertos-addons/c/Source/*.*"
         "libs/freertos-addons/c++/Source/*.*"
+        "libs/libopencm3_cpp_extensions/*.*"
         #"startup/*.*"
         #"Drivers/*.*" "Src/*.*" "Inc/*.*"
 )
@@ -67,6 +68,7 @@ include_directories(
         libs/freertos/include
         libs/freertos/portable/GCC/ARM_CM4F
         libs/freertos-addons/c++/Source/include
+        libs
         #Drivers/STM32F4xx_HAL_Driver/Inc Drivers/STM32F4xx_HAL_Driver/Inc/Legacy Drivers/CMSIS/Device/ST/STM32F4xx/Include Drivers/CMSIS/Include
 )
 

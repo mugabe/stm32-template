@@ -7,11 +7,14 @@
 #include "LedBlinkingTask.h"
 
 namespace tasks {
-
-  LedBlinkingTask::LedBlinkingTask() :
-    Thread("Led Blinking Task",
-           configMINIMAL_STACK_SIZE,
-           1)
+  LedBlinkingTask::LedBlinkingTask()
+    :
+    Thread(
+      "Led Blinking Task",
+      configMINIMAL_STACK_SIZE,
+      1
+    ),
+    m_led(PD12)
   {
     this->Start();
   }
@@ -22,10 +25,9 @@ namespace tasks {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wmissing-noreturn"
     while (true) {
-      gpio_toggle(GPIOD, GPIO12);
+      m_led.toggle();
       Thread::Delay(delay_time);
     }
 #pragma clang diagnostic pop
   }
-
 }
