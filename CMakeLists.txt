@@ -18,7 +18,7 @@ link_directories(
         libs/libopencm3/lib
         ${CMAKE_SOURCE_DIR}/libs/libopencm3/lib
 )
-#SET(LINKER_SCRIPT ${CMAKE_SOURCE_DIR}/STM32F407VGTx_FLASH.ld)
+
 SET(
         LINKER_SCRIPT
         ${CMAKE_SOURCE_DIR}/libs/libopencm3/lib/stm32/f4/stm32f405x6.ld
@@ -32,8 +32,8 @@ add_definitions(-DARM_MATH_CM4 -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING -D__F
 #SET(FPU_FLAGS "-mfloat-abi=soft")
 
 SET(COMMON_FLAGS
-    "-mcpu=cortex-m4 ${FPU_FLAGS} -mthumb -mthumb-interwork -ffunction-sections -fdata-sections \
-    -g -fno-common -fmessage-length=0 -specs=nosys.specs -specs=nano.specs")
+        "-mcpu=cortex-m4 ${FPU_FLAGS} -mthumb -mthumb-interwork -ffunction-sections -fdata-sections \
+        -g -fno-common -fmessage-length=0 -specs=nosys.specs -specs=nano.specs")
 
 SET(CMAKE_CXX_FLAGS_INIT "${COMMON_FLAGS} -std=c++14")
 SET(CMAKE_C_FLAGS_INIT "${COMMON_FLAGS} -std=gnu99")
@@ -42,24 +42,24 @@ SET(CMAKE_EXE_LINKER_FLAGS_INIT -lstdc++ "-Wl,-gc-sections,--print-memory-usage 
 PROJECT(Skeleton C CXX ASM)
 set(CMAKE_CXX_STANDARD 14)
 
-#add_definitions(-DARM_MATH_CM4 -DARM_MATH_MATRIX_CHECK -DARM_MATH_ROUNDING -D__FPU_PRESENT=1)
 add_definitions(-D__weak=__attribute__\(\(weak\)\) -D__packed=__attribute__\(\(__packed__\)\) -DUSE_HAL_DRIVER -DSTM32F407xx -DSTM32F4 -DCPP_FREERTOS_NO_CPP_STRINGS -DCPP_FREERTOS_NO_EXCEPTIONS)
 
 file(
         #GLOB_RECURSE
         GLOB
-        SOURCES
-        "src/*.*"
-        "src/tasks/*.*"
-        "src/hw/*.*"
+        LIB_SOURCES
         "libs/freertos/*.*"
         "libs/freertos/portable/GCC/ARM_CM4F/*.*"
         "libs/freertos/portable/MemMang/heap_4.c"
         #"libs/freertos-addons/c/Source/*.*"
         "libs/freertos-addons/c++/Source/*.*"
         "libs/libopencm3_cpp_extensions/*.*"
-        #"startup/*.*"
-        #"Drivers/*.*" "Src/*.*" "Inc/*.*"
+)
+
+file(
+        GLOB_RECURSE
+        SOURCES
+        "src/*.*"
 )
 
 include_directories(
@@ -69,10 +69,9 @@ include_directories(
         libs/freertos/portable/GCC/ARM_CM4F
         libs/freertos-addons/c++/Source/include
         libs
-        #Drivers/STM32F4xx_HAL_Driver/Inc Drivers/STM32F4xx_HAL_Driver/Inc/Legacy Drivers/CMSIS/Device/ST/STM32F4xx/Include Drivers/CMSIS/Include
 )
 
-add_executable(${PROJECT_NAME}.elf ${SOURCES} ${LINKER_SCRIPT})
+add_executable(${PROJECT_NAME}.elf ${LIB_SOURCES} ${SOURCES} ${LINKER_SCRIPT})
 
 target_link_libraries(
     ${PROJECT_NAME}.elf
