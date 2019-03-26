@@ -37,7 +37,7 @@ SET(COMMON_FLAGS
 
 SET(CMAKE_CXX_FLAGS_INIT "${COMMON_FLAGS} -std=c++14")
 SET(CMAKE_C_FLAGS_INIT "${COMMON_FLAGS} -std=gnu99")
-SET(CMAKE_EXE_LINKER_FLAGS_INIT -lstdc++ "-Wl,-gc-sections,--print-memory-usage -T ${LINKER_SCRIPT}")
+SET(CMAKE_EXE_LINKER_FLAGS_INIT "-Wl,-gc-sections,--print-memory-usage -T ${LINKER_SCRIPT}")
 
 PROJECT(Skeleton C CXX ASM)
 set(CMAKE_CXX_STANDARD 14)
